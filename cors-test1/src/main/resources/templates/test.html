@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="test()">Test</button>
+<script>
+    function test() {
+        fetch('http://localhost:9001/test', {
+            method: 'POST', // 또는 'GET' 등 요청 방식에 따라
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: 'yourData' })
+        }).then(response => {
+            return response.json();
+        }).then(data => {
+            console.log(data);
+            fetch('http://localhost:8988/hack', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: data })
+            }).then(response => {
+                return response.json();
+            }).then(data => {
+                console.log(data);
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+</script>
+</body>
+</html>
